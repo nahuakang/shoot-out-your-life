@@ -13,10 +13,10 @@ struct TitleScene {
 
 impl TitleScene {
     fn new(ctx: &mut Context) -> tetra::Result<Self> {
-        let title = Texture::from_file_data(ctx, include_bytes!("../assets/art/large_title.png"))?;
-        
-        let background_music = Sound::from_file_data(include_bytes!("../assets/music/014.mp3"));
-        // Spawn a new instance of the music
+        // Load game title scene
+        let title = Texture::new(ctx, "./assets/art/large_title.png")?;
+        // Load theme music
+        let background_music = Sound::new("./assets/music/014.mp3")?;
         let background_music_instance = background_music.spawn(ctx)?;
         background_music_instance.play();
         background_music_instance.set_repeating(true);
