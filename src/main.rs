@@ -1,14 +1,39 @@
-use tetra::graphics::{self, Color};
 use tetra::{Context, ContextBuilder, State};
+use tetra::audio::{Sound, SoundInstance};
+use tetra::graphics::{self, Color, DrawParams, Texture};
+
 
 #[macro_use]
 extern crate lazy_static;
 
-struct GameState;
+struct TitleScene {
+    title: Texture,
+    background_music_instance: SoundInstance,
+}
 
-impl State for GameState {
+impl TitleScene {
+    fn new(ctx: &mut Context) -> tetra::Result<Self> {
+        let title = Texture::from_file_data(ctx, include_bytes!("../assets/art/large_title.png"))?;
+        
+        let background_music = Sound::from_file_data(include_bytes!("../assets/music/014.mp3"));
+        // Spawn a new instance of the music
+        let background_music_instance = background_music.spawn(ctx)?;
+        background_music_instance.play();
+        background_music_instance.set_repeating(true);
+        background_music_instance.set_volume(0.1);
+
+        Ok(Self{
+            title,
+            background_music_instance,
+        })
+    }
+}
+
+impl State for TitleScene {
     fn draw(&mut self, ctx: &mut Context) -> tetra::Result {
-        graphics::clear(ctx, Color::rgb(0.392, 0.584, 0.929));
+        graphics::clear(ctx, Color::rgb(0.122, 0.055, 0.11));
+        // Texture implements the Drawable trait
+        graphics::draw(ctx, &self.title, DrawParams::default());
 
         Ok(())
     }
@@ -48,10 +73,10 @@ fn main() -> tetra::Result {
         GAMEINFO.window.width as i32,
         GAMEINFO.window.height as i32,
     )
-    .resizable(false)
-    .maximized(false)
-    .fullscreen(false)
     .quit_on_escape(false)
     .build()?
-    .run(|_| Ok(GameState))
+    .run(|ctx| {
+        let title_scene = TitleScene::new(ctx)?;
+        Ok(title_scene)
+    })
 }
