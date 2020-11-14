@@ -1,35 +1,15 @@
 mod scenes;
+mod utils;
 
+use crate::scenes::manager::SceneManager;
 use crate::scenes::title::TitleScene;
+use crate::utils::GameInformation;
 
 use tetra::{ContextBuilder};
 
 
 #[macro_use]
 extern crate lazy_static;
-
-struct Window {
-    width: u32,
-    height: u32,
-}
-
-struct GameInformation {
-    window: Window,
-    version: String,
-}
-
-impl GameInformation {
-    fn new() -> Self {
-        let version = env!("CARGO_PKG_VERSION").to_owned();
-        GameInformation {
-            window: Window {
-                width: 480,
-                height: 920,
-            },
-            version,
-        }
-    }
-}
 
 // Initialize GameInformation at runtime on first access in main
 lazy_static! {
@@ -46,6 +26,6 @@ fn main() -> tetra::Result {
     .build()?
     .run(|ctx| {
         let title_scene = TitleScene::new(ctx)?;
-        Ok(title_scene)
+        Ok(SceneManager::new(Box::new(title_scene)))
     })
 }

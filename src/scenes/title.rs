@@ -1,6 +1,9 @@
-use tetra::{Context, State};
+use crate::scenes::manager::{Scene, Transition};
+
+use tetra::{Context};
 use tetra::audio::{Sound, SoundInstance};
 use tetra::graphics::{self, Color, DrawParams, Texture};
+use tetra::input::{self, Key, GamepadButton};
 
 pub struct TitleScene {
     title: Texture,
@@ -25,12 +28,23 @@ impl TitleScene {
     }
 }
 
-impl State for TitleScene {
-    fn draw(&mut self, ctx: &mut Context) -> tetra::Result {
+impl Scene for TitleScene {
+    fn update(&mut self, ctx: &mut Context) -> tetra::Result<Transition> {
+        if input::is_key_released(ctx, Key::Space) || input::is_key_released(ctx, Key::Enter) || input::is_gamepad_button_released(ctx, 0, GamepadButton::A) || input::is_gamepad_button_released(ctx, 0, GamepadButton::Start) {
+            // TODO: Implement GameScene::new
+            Ok(Transition::Quit)
+        } else if input::is_key_released(ctx, Key::Escape) || input::is_gamepad_button_released(ctx, 0, GamepadButton::Back) {
+            Ok(Transition::Quit)
+        } else {
+            Ok(Transition::None)
+        }
+    }
+
+    fn draw(&mut self, ctx: &mut Context) -> tetra::Result<Transition> {
         graphics::clear(ctx, Color::rgb(0.122, 0.055, 0.11));
         // Texture implements the Drawable trait
         graphics::draw(ctx, &self.title, DrawParams::default());
 
-        Ok(())
+        Ok(Transition::None)
     }
 }
