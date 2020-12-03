@@ -31,8 +31,8 @@ impl TitleScene {
 impl Scene for TitleScene {
     fn update(&mut self, ctx: &mut Context) -> tetra::Result<Transition> {
         if input::is_key_released(ctx, Key::Space) || input::is_key_released(ctx, Key::Enter) || input::is_gamepad_button_released(ctx, 0, GamepadButton::A) || input::is_gamepad_button_released(ctx, 0, GamepadButton::Start) {
-            // TODO: Implement GameScene::new
-            Ok(Transition::Quit)
+            // TODO: Implement GameScene
+            Ok(Transition::Push(Box::new(GameScene::new(ctx)?)))
         } else if input::is_key_released(ctx, Key::Escape) || input::is_gamepad_button_released(ctx, 0, GamepadButton::Back) {
             Ok(Transition::Quit)
         } else {

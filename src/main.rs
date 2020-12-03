@@ -1,3 +1,4 @@
+mod assets;
 mod scenes;
 mod utils;
 

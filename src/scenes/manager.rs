@@ -15,11 +15,13 @@ pub enum Transition {
     Quit,
 }
 
+/// SceneManager implements State and manages the transition of different scenes.
 pub struct SceneManager {
     scenes: Vec<Box<dyn Scene>>,
 }
 
 impl SceneManager {
+    /// Returns a new instance of SceneManager.
     pub fn new(initial_scene: Box<dyn Scene>) -> Self {
         SceneManager {
             scenes: vec![initial_scene],
