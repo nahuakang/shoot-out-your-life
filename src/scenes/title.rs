@@ -14,7 +14,7 @@ pub struct TitleScene {
 impl TitleScene {
     pub fn new(ctx: &mut Context) -> tetra::Result<Self> {
         // Load game title scene
-        let title = Texture::new(ctx, "./assets/art/large_title.png")?;
+        let title = Texture::new(ctx, "./assets/art/title.png")?;
         // Load theme music
         let background_music = Sound::new("./assets/music/014.mp3")?;
         let background_music_instance = background_music.spawn(ctx)?;

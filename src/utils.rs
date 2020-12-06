@@ -13,8 +13,8 @@ impl GameInformation {
         let version = env!("CARGO_PKG_VERSION").to_owned();
         GameInformation {
             window: Window {
-                width: 480,
-                height: 920,
+                width: 240,
+                height: 460,
             },
             version,
         }
