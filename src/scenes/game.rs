@@ -32,15 +32,17 @@ impl Scene for GameScene {
 
     fn draw(&mut self, ctx: &mut Context) -> tetra::Result<Transition> {
         graphics::clear(ctx, Color::rgb(0.122, 0.055, 0.11));
-		// graphics::draw(ctx,self.assets.get_texture(&TextureName::Background),
-		// 			   Vec2::new(0.0, 0.0));
 		graphics::draw(
-            ctx,self.assets.get_animation(&AnimationName::Line),
-            DrawParams::new().position(Vec2::new(
-                self.player_position.position[0] - 3.0,
-                self.player_position.position[1] - 379.0,
-            )),
+            ctx,self.assets.get_texture(&TextureName::Background),
+            DrawParams::default(),
         );
+		// graphics::draw(
+        //     ctx,self.assets.get_animation(&AnimationName::Line),
+        //     DrawParams::new().position(Vec2::new(
+        //         self.player_position.position[0] - 3.0,
+        //         self.player_position.position[1] - 379.0,
+        //     )),
+        // );
         Ok(Transition::None)
     }
 }

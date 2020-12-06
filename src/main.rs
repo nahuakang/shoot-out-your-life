@@ -23,6 +23,7 @@ fn main() -> tetra::Result {
         GAMEINFO.window.width as i32,
         GAMEINFO.window.height as i32,
     )
+    .resizable(false) // Remove later
     .quit_on_escape(false)
     .build()?
     .run(|ctx| {
